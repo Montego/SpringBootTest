@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>webCrudApp</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <#nested>
