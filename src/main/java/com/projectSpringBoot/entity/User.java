@@ -24,9 +24,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Password can't be empty")
     private String password;
     //@Transient - hibernate не будет пытаться сохранить это поле в бд и достать оттуда
-    @Transient
-    @NotBlank(message = "Password confirmation can't be empty")
-    private String password_confirm;
+
     @Email(message="Email is not correct")
     @NotBlank(message = "Email can't be empty")
     private String email;
