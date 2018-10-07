@@ -19,6 +19,7 @@ public class Message {
     private String text;
     @Length(max = 255, message = "Tag too long")
     private String tag;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
