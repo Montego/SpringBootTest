@@ -2,6 +2,6 @@ body{
     color: #113;
 }
 .greetingPage{
-    background-image: url(/static/img/1.jpg);
+    /*background-image: url(/static/img/1.jpg);*/
     /*background-size: cover;*/
 }
