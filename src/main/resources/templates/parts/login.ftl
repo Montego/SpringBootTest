@@ -18,7 +18,7 @@
         <div class="col-sm-6">
         <input type="password" name="password"
                class="form-control ${(passwordError??)?string('is-invalid','')}"
-               placeholder="Password"/ >
+               placeholder="Password"/>
              <#if passwordError??>
                 <div class="invalid-feedback">
                     ${passwordError}
@@ -33,7 +33,7 @@
           <div class="col-sm-6">
               <input type="password" name="password_confirm"
                      class="form-control ${(password_confirmError??)?string('is-invalid','')}"
-                     placeholder="Retype Password"/ >
+                     placeholder="Retype Password"/>
              <#if password_confirmError??>
                 <div class="invalid-feedback">
                     ${password_confirmError}
