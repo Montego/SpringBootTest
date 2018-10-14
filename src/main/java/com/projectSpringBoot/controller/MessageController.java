@@ -2,7 +2,9 @@ package com.projectSpringBoot.controller;
 
 import com.projectSpringBoot.entity.Message;
 import com.projectSpringBoot.entity.User;
+import com.projectSpringBoot.entity.dto.MessageDto;
 import com.projectSpringBoot.repository.MessageRepository;
+import com.projectSpringBoot.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,11 +26,13 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 @Controller
-public class MainController {
+public class MessageController {
+
+    @Autowired
+    private MessageService messageService;
 
     private MessageRepository messageRepository;
     //ищет проперти upload.path и вставляет в переменную String uploadPath
@@ -36,7 +40,7 @@ public class MainController {
     private String uploadPath;
 
     @Autowired
-    MainController(MessageRepository messageRepository) {
+    MessageController(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
@@ -48,13 +52,11 @@ public class MainController {
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter,
                        Model model,
-                       @PageableDefault(sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Message> page;
-        if (filter != null && !filter.isEmpty()) {
-            page = messageRepository.findByTag(filter,pageable);
-        } else {
-            page = messageRepository.findAll(pageable);
-        }
+                       @PageableDefault(sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable,
+                       @AuthenticationPrincipal User user) {
+
+        Page<MessageDto> page = messageService.messageList(pageable, filter, user);
+
         model.addAttribute("page", page);
         model.addAttribute("url", "/main");
         model.addAttribute("filter", filter);
@@ -99,22 +101,25 @@ public class MainController {
         }
     }
 
-    @GetMapping("/user-messages/{user}")
+    @GetMapping("/user-messages/{author}")
         public String userMessages(
                 @AuthenticationPrincipal User currentUser,
-                @PathVariable User user,
+                @PathVariable User author,
                 Model model,
-                @RequestParam(required = false) Message message
+                @RequestParam(required = false) Message message,
+                @PageableDefault(sort = {"id"},direction = Sort.Direction.DESC) Pageable pageable
                 ){
-        Set<Message> messages = user.getMessages();
+        Page<MessageDto> page = messageService.messageListForUser(pageable,author, currentUser);
 
-        model.addAttribute("userChannel",user);
-        model.addAttribute("subcriptionsCount",user.getSubscribtions().size());
-        model.addAttribute("subcribersCount",user.getSubscribers().size());
-        model.addAttribute("isSubscriber",user.getSubscribers().contains(currentUser));
-        model.addAttribute("messages",messages);
+        model.addAttribute("userChannel",author);
+        model.addAttribute("subcriptionsCount",author.getSubscribtions().size());
+        model.addAttribute("subcribersCount",author.getSubscribers().size());
+        model.addAttribute("isSubscriber",author.getSubscribers().contains(currentUser));
+        model.addAttribute("page",page);
         model.addAttribute("message",message);
-        model.addAttribute("isCurrentUser",currentUser.equals(user));
+        model.addAttribute("isCurrentUser",currentUser.equals(author));
+        model.addAttribute("url","/user-messages" + author.getId());
+
 
         return "userMessages";
         }
