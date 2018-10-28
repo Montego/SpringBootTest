@@ -69,6 +69,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "author",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Message> messages;
 
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Coffee> coffees;
+
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
     };

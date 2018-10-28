@@ -32,21 +32,21 @@ import java.util.UUID;
 @Controller
 public class MessageController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    private MessageRepository messageRepository;
+    private final MessageRepository messageRepository;
     //ищет проперти upload.path и вставляет в переменную String uploadPath
     @Value("${upload.path}")
     private String uploadPath;
 
     @Autowired
-    MessageController(MessageRepository messageRepository) {
+    MessageController(MessageRepository messageRepository,MessageService messageService) {
         this.messageRepository = messageRepository;
+        this.messageService = messageService;
     }
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting(Model model) {
         return "greeting";
     }
 
@@ -141,6 +141,7 @@ public class MessageController {
             if (!StringUtils.isEmpty(tag)) {
                 message.setTag(tag);
             }
+
             saveFile(message, file);
             messageRepository.save(message);
         }

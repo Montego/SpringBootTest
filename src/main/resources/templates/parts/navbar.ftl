@@ -20,6 +20,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/user-messages/${currentUserId}">My messages</a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/user-coffees/${currentUserId}">My coffees</a>
+            </li>
             </#if>
             <#if isAdmin>
             <li class="nav-item active">
