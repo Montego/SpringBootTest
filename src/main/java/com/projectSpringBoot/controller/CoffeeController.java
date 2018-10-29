@@ -1,12 +1,12 @@
 package com.projectSpringBoot.controller;
 
 import com.projectSpringBoot.entity.User;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class CoffeeController {
@@ -14,8 +14,10 @@ public class CoffeeController {
     public String greeting_Coffee(@AuthenticationPrincipal User currentUser,
                                   @PathVariable User author,
                                   Model model) {
+        ClassPathResource imgFile = new ClassPathResource("img/**");
         model.addAttribute("userName", author.getUsername());
-        return "greeting_coffee";
+        model.addAttribute(imgFile);
+        return "coffee";
     }
 
 }

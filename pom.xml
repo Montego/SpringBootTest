@@ -89,5 +89,25 @@
         </plugins>
     </build>
 
-
+    <profiles>
+        <profile>
+            <id>webCrudApp</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!--common properties for database connection-->
+                <db.url>jdbc:postgresql://localhost:5432/webCrudApp</db.url>
+                <db.username>postgres</db.username>
+                <db.password>superuser</db.password>
+                <db.adm.user>postgres</db.adm.user>
+                <db.adm.pass>superuser</db.adm.pass>
+                <!-- Properties are prefixed with flyway. -->
+                <flyway.user>${db.adm.user}</flyway.user>
+                <flyway.password>${db.adm.pass}</flyway.password>
+                <flyway.url>${db.url}</flyway.url>
+                <flyway.locations>db/migration/init/</flyway.locations>
+            </properties>
+        </profile>
+    </profiles>
 </project>

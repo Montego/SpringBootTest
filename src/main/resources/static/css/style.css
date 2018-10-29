@@ -5,3 +5,6 @@ body{
     /*background-image: url(/static/img/1.jpg);*/
     /*background-size: cover;*/
 }
+div.bg-info{
+    background-color: white;
+}

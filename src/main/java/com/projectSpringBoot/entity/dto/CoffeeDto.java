@@ -8,7 +8,7 @@ import lombok.Getter;
 public class CoffeeDto {
     private Long id;
 
-    private String name_coffee;
+    private String name;
 
     private String additive;
 
@@ -17,7 +17,7 @@ public class CoffeeDto {
 
     public CoffeeDto(Coffee coffee) {
         this.id = coffee.getId();
-        this.name_coffee = coffee.getName_coffee();
+        this.name = coffee.getName();
         this.additive = coffee.getAdditive();
         this.size = coffee.getSize();
 

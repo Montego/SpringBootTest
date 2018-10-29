@@ -73,6 +73,7 @@ public class MessageController {
                       @RequestParam("file") MultipartFile file) throws IOException {
 
         message.setAuthor(user);
+
         if (bindingResult.hasErrors()) {
             Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorsMap);
@@ -81,11 +82,13 @@ public class MessageController {
         } else {
             saveFile(message, file);
             model.addAttribute("message", null);
+
             messageRepository.save(message);
         }
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
-        return "main";
+
+        return "redirect:/main";
     }
 
     private void saveFile(@Valid Message message, @RequestParam("file") MultipartFile file) throws IOException {

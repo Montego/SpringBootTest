@@ -15,11 +15,13 @@ public class Coffee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name_coffee;
+    private String name;
 
     private String additive;
 
     private String size;
+
+    private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -27,8 +29,8 @@ public class Coffee {
 
     public Coffee(){}
 
-    public Coffee(String name_coffee, String additive, String size) {
-        this.name_coffee = name_coffee;
+    public Coffee(String name, String additive, String size) {
+        this.name = name;
         this.additive = additive;
         this.size = size;
     }
