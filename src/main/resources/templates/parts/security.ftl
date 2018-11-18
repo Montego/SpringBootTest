@@ -1,5 +1,5 @@
 <#assign
-    know = Session.SPRING_SECURITY_CONTEXT??
+know = Session.SPRING_SECURITY_CONTEXT??
 >
 <#if know>
     <#assign
